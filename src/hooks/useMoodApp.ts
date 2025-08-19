@@ -139,13 +139,13 @@ export const useMoodApp = () => {
       return;
     }
 
-    // Скрываем похвалу через 1 секунду и показываем кнопки
+    // Скрываем похвалу через 2 секунды и показываем кнопки
     setTimeout(() => {
       setShowPraise(false);
       setTimeout(() => {
         setShowButtons(true);
       }, 300);
-    }, 1000);
+    }, 2000);
   }, [clickCount, getRandomGradient, getRandomUnusedPraise]);
 
   const onPraiseAnimationComplete = useCallback(() => {
