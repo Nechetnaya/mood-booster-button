@@ -12,10 +12,25 @@ All colors MUST be HSL.
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
-    /* Gradient System */
-    --gradient-default: linear-gradient(135deg, hsl(334, 100%, 70%) 0%, hsl(54, 100%, 62%) 100%);
-    --gradient-sad: linear-gradient(135deg, hsl(199, 92%, 64%) 0%, hsl(45, 100%, 64%) 100%);
-    --gradient-happy: linear-gradient(135deg, hsl(340, 100%, 64%) 0%, hsl(60, 100%, 50%) 100%);
+    /* Gradient System - Multiple variations */
+    --gradient-1: linear-gradient(135deg, hsl(334, 100%, 70%) 0%, hsl(54, 100%, 62%) 100%);
+    --gradient-2: linear-gradient(135deg, hsl(300, 100%, 70%) 0%, hsl(45, 100%, 65%) 100%);
+    --gradient-3: linear-gradient(135deg, hsl(320, 100%, 75%) 0%, hsl(60, 100%, 60%) 100%);
+    --gradient-4: linear-gradient(135deg, hsl(340, 100%, 65%) 0%, hsl(50, 100%, 70%) 100%);
+    --gradient-5: linear-gradient(135deg, hsl(310, 100%, 72%) 0%, hsl(55, 100%, 58%) 100%);
+    --gradient-6: linear-gradient(135deg, hsl(350, 100%, 68%) 0%, hsl(48, 100%, 62%) 100%);
+    --gradient-7: linear-gradient(135deg, hsl(330, 100%, 74%) 0%, hsl(52, 100%, 64%) 100%);
+    --gradient-8: linear-gradient(135deg, hsl(315, 100%, 69%) 0%, hsl(58, 100%, 66%) 100%);
+    --gradient-9: linear-gradient(135deg, hsl(345, 100%, 71%) 0%, hsl(46, 100%, 59%) 100%);
+    --gradient-10: linear-gradient(135deg, hsl(325, 100%, 67%) 0%, hsl(56, 100%, 63%) 100%);
+    
+    --gradient-sad-1: linear-gradient(135deg, hsl(199, 92%, 64%) 0%, hsl(45, 100%, 64%) 100%);
+    --gradient-sad-2: linear-gradient(135deg, hsl(210, 85%, 60%) 0%, hsl(40, 95%, 68%) 100%);
+    --gradient-sad-3: linear-gradient(135deg, hsl(195, 90%, 66%) 0%, hsl(50, 98%, 62%) 100%);
+    
+    --gradient-happy-1: linear-gradient(135deg, hsl(340, 100%, 64%) 0%, hsl(60, 100%, 50%) 100%);
+    --gradient-happy-2: linear-gradient(135deg, hsl(350, 100%, 68%) 0%, hsl(65, 100%, 55%) 100%);
+    --gradient-happy-3: linear-gradient(135deg, hsl(330, 100%, 70%) 0%, hsl(55, 100%, 52%) 100%);
 
     /* Button Colors */
     --button-sad: 199 92% 64%;

@@ -7,6 +7,7 @@ const Index = () => {
   const {
     clickCount,
     currentMood,
+    currentGradient,
     currentPraise,
     showPraise,
     showButtons,
@@ -16,25 +17,14 @@ const Index = () => {
     isComplete
   } = useMoodApp();
 
-  // Update background gradient based on mood
+  // Update background gradient based on current gradient
   useEffect(() => {
     const body = document.body;
-    body.className = ''; // Clear existing classes
-    
-    switch (currentMood) {
-      case 'sad':
-        body.style.background = 'var(--gradient-sad)';
-        break;
-      case 'happy':
-        body.style.background = 'var(--gradient-happy)';
-        break;
-      default:
-        body.style.background = 'var(--gradient-default)';
-    }
+    body.style.background = currentGradient;
     
     body.style.minHeight = '100vh';
     body.style.transition = 'background 0.8s ease-in-out';
-  }, [currentMood]);
+  }, [currentGradient]);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-6 relative">
