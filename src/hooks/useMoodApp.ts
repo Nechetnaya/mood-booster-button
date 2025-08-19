@@ -45,8 +45,8 @@ export const useMoodApp = () => {
   const [showButtons, setShowButtons] = useState(true);
 
   const getRandomPraise = useCallback(() => {
-    if (clickCount >= 99) {
-      return "Теперь ты меня хвали";
+    if (clickCount >= 29) {
+      return "Теперь ты меня хвали!";
     }
     return PRAISE_MESSAGES[Math.floor(Math.random() * PRAISE_MESSAGES.length)];
   }, [clickCount]);
@@ -58,15 +58,23 @@ export const useMoodApp = () => {
     setShowPraise(true);
     setClickCount(prev => prev + 1);
 
-    // Auto hide praise and show buttons again after 3 seconds
+    // For the final message (30th click), don't auto-hide
+    if (clickCount >= 29) {
+      return;
+    }
+
+    // Auto hide praise and show buttons again after 2.5 seconds
     setTimeout(() => {
       setShowPraise(false);
-    }, 3000);
-  }, [getRandomPraise]);
+    }, 2500);
+  }, [getRandomPraise, clickCount]);
 
   const onPraiseAnimationComplete = useCallback(() => {
-    setShowButtons(true);
-  }, []);
+    // Only show buttons again if it's not the final message
+    if (clickCount < 30) {
+      setShowButtons(true);
+    }
+  }, [clickCount]);
 
   const resetApp = useCallback(() => {
     setClickCount(0);
@@ -85,6 +93,6 @@ export const useMoodApp = () => {
     handleMoodClick,
     onPraiseAnimationComplete,
     resetApp,
-    isComplete: clickCount >= 100
+    isComplete: clickCount >= 30
   };
 };

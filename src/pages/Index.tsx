@@ -41,7 +41,7 @@ const Index = () => {
       {/* Click Counter */}
       <div className="absolute top-8 right-8">
         <div className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 text-white font-semibold">
-          {clickCount}/100
+          {clickCount}/30
         </div>
       </div>
 
@@ -85,15 +85,12 @@ const Index = () => {
           </div>
         )}
 
-        {/* Completion Message */}
-        {isComplete && !showPraise && (
+        {/* Final Message - only show after 30 clicks and no praise is showing */}
+        {isComplete && !showPraise && !showButtons && (
           <div className="text-center animate-fade-in">
-            <h2 className="text-3xl font-bold text-praise-text mb-4" style={{ textShadow: '0 2px 20px rgba(0, 0, 0, 0.3)' }}>
-              Поздравляем! 🎉
+            <h2 className="text-4xl md:text-5xl font-bold text-praise-text" style={{ textShadow: '0 2px 20px rgba(0, 0, 0, 0.3)' }}>
+              Теперь ты меня хвали! 🎉
             </h2>
-            <p className="text-xl text-white/90" style={{ textShadow: '0 1px 10px rgba(0, 0, 0, 0.3)' }}>
-              Вы достигли 100 нажатий!
-            </p>
           </div>
         )}
       </div>
