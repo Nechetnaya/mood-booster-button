@@ -44,30 +44,34 @@ export const useMoodApp = () => {
   const [showPraise, setShowPraise] = useState(false);
   const [showButtons, setShowButtons] = useState(true);
 
-  const getRandomPraise = useCallback(() => {
-    if (clickCount >= 29) {
-      return "Теперь ты меня хвали!";
-    }
-    return PRAISE_MESSAGES[Math.floor(Math.random() * PRAISE_MESSAGES.length)];
-  }, [clickCount]);
 
   const handleMoodClick = useCallback((mood: 'sad' | 'happy') => {
+    const newClickCount = clickCount + 1;
+    setClickCount(newClickCount);
     setCurrentMood(mood);
-    setCurrentPraise(getRandomPraise());
+    
+    // Generate praise based on new click count
+    const praise = newClickCount >= 30 
+      ? "Теперь ты меня хвали!" 
+      : PRAISE_MESSAGES[Math.floor(Math.random() * PRAISE_MESSAGES.length)];
+    
+    setCurrentPraise(praise);
     setShowButtons(false);
     setShowPraise(true);
-    setClickCount(prev => prev + 1);
 
-    // For the final message (30th click), don't auto-hide
-    if (clickCount >= 29) {
+    // For the final message (30th click), don't show buttons again
+    if (newClickCount >= 30) {
       return;
     }
 
-    // Auto hide praise and show buttons again after 2.5 seconds
+    // Hide praise after 1 second and show buttons
     setTimeout(() => {
       setShowPraise(false);
-    }, 2500);
-  }, [getRandomPraise, clickCount]);
+      setTimeout(() => {
+        setShowButtons(true);
+      }, 300); // Small delay for smooth transition
+    }, 1000);
+  }, [clickCount]);
 
   const onPraiseAnimationComplete = useCallback(() => {
     // Only show buttons again if it's not the final message
