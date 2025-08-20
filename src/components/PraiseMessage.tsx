@@ -4,9 +4,10 @@ interface PraiseMessageProps {
   message: string;
   isVisible: boolean;
   onAnimationComplete: () => void;
+  onSkip?: () => void;
 }
 
-const PraiseMessage = ({ message, isVisible, onAnimationComplete }: PraiseMessageProps) => {
+const PraiseMessage = ({ message, isVisible, onAnimationComplete, onSkip }: PraiseMessageProps) => {
   const [shouldRender, setShouldRender] = useState(false);
 
   useEffect(() => {
@@ -26,13 +27,15 @@ const PraiseMessage = ({ message, isVisible, onAnimationComplete }: PraiseMessag
   return (
     <div 
       className={`
-        text-4xl md:text-5xl font-bold text-praise-text text-center
-        transition-all duration-500 ease-out
+        text-4xl md:text-5xl font-bold text-praise-text text-center cursor-pointer
+        transition-all duration-500 ease-out hover-scale
         ${isVisible ? 'animate-fade-in' : 'animate-fade-out'}
       `}
       style={{
         textShadow: '0 2px 20px rgba(0, 0, 0, 0.3)',
       }}
+      onClick={onSkip}
+      title="Нажмите, чтобы продолжить"
     >
       {message}
     </div>

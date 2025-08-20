@@ -16,6 +16,7 @@ const Index = () => {
     showButtons,
     handleMoodClick,
     onPraiseAnimationComplete,
+    handleSkipPraise,
     resetApp,
     isComplete
   } = useMoodApp(t, language);
@@ -63,6 +64,7 @@ const Index = () => {
               message={currentPraise}
               isVisible={showPraise}
               onAnimationComplete={onPraiseAnimationComplete}
+              onSkip={handleSkipPraise}
             />
           </div>
         )}

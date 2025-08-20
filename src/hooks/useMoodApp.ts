@@ -87,7 +87,16 @@ export const useMoodApp = (t: Translations, language: Language) => {
         setShowButtons(true);
       }, 300);
     }, 2000);
-  }, [clickCount, getRandomGradient, getRandomUnusedPraise]);
+  }, [clickCount, getRandomGradient, getRandomUnusedPraise, t.finalMessage]);
+
+  const handleSkipPraise = useCallback(() => {
+    if (clickCount < 30) {
+      setShowPraise(false);
+      setTimeout(() => {
+        setShowButtons(true);
+      }, 300);
+    }
+  }, [clickCount]);
 
   const onPraiseAnimationComplete = useCallback(() => {
     if (clickCount < 30) {
@@ -114,6 +123,7 @@ export const useMoodApp = (t: Translations, language: Language) => {
     showButtons,
     handleMoodClick,
     onPraiseAnimationComplete,
+    handleSkipPraise,
     resetApp,
     isComplete: clickCount >= 30
   };
