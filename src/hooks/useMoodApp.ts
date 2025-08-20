@@ -19,7 +19,7 @@ const GRADIENTS = {
 type MoodType = 'default' | 'sad' | 'happy';
 
 export const useMoodApp = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [clickCount, setClickCount] = useState(0);
   const [currentMood, setCurrentMood] = useState<MoodType>('default');
   const [currentGradient, setCurrentGradient] = useState(GRADIENTS.default[0]);
@@ -27,6 +27,13 @@ export const useMoodApp = () => {
   const [showPraise, setShowPraise] = useState(false);
   const [showButtons, setShowButtons] = useState(true);
   const [usedPraises, setUsedPraises] = useState<Set<string>>(new Set());
+
+  // Сбрасываем использованные похвалы при смене языка
+  const [currentLanguage, setCurrentLanguage] = useState(language);
+  if (currentLanguage !== language) {
+    setUsedPraises(new Set());
+    setCurrentLanguage(language);
+  }
 
   const getRandomGradient = useCallback((mood: MoodType) => {
     const gradients = GRADIENTS[mood];
