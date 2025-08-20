@@ -1,6 +1,6 @@
 # Mood Booster Button
 
-**Игра онлайн:** [https://mood-booster-button.lovable.app/](https://mood-booster-button.lovable.app/)
+**Игра онлайн:** [тык](http://136.244.84.12:8081/)
 
 ---
 
