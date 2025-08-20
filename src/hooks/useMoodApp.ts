@@ -1,73 +1,5 @@
 import { useState, useCallback } from 'react';
-
-// Категории похвал по требованию пользователя
-const ORIGINAL_PRAISES = [
-  "Ты самый лучший!",
-  "Ты сегодня молодец!",
-  "Ты заслужил пирожное!",
-  "Отдохни!",
-  "Ты такой замечательный!",
-  "Ты красавчик!",
-  "Продолжай в том же духе!",
-  "Ты справился!",
-  "Ты молодец!",
-  "Ты вдохновляешь!",
-  "Ты умница!",
-  "Ты потрясающий!",
-  "Ты сияешь!",
-  "Ты сделал шаг вперёд!",
-  "Ты крут!",
-  "Ты талантлив!",
-  "Ты великолепен!",
-  "Ты заслуживаешь награду!",
-  "Ты невероятен!",
-  "Ты сияешь как солнце!"
-];
-
-const FUNNY_PRAISES = [
-  "Ты круче чем кот в сапогах!",
-  "Даже пингвины завидуют твоей крутости!",
-  "Ты как WiFi - без тебя жизнь не та!",
-  "Твоя улыбка ярче, чем экран телефона!",
-  "Ты настолько крут, что единороги просят автограф!",
-  "Даже будильник не хочет тебя будить!",
-  "Ты как пицца - всегда к месту!",
-  "Твоя энергия заряжает телефоны!",
-  "Ты круче, чем селфи с котиком!",
-  "Даже радуга учится у тебя быть яркой!",
-  "Ты как мем - поднимаешь настроение!",
-  "Твоя крутость зашкаливает больше интернета!",
-  "Ты как хороший Wi-Fi - всегда на связи!",
-  "Даже смайлики берут с тебя пример!",
-  "Ты круче чем тёплые носки зимой!",
-  "Твоя позитивность заразительнее зевоты!",
-  "Ты как любимая песня - всегда в тему!",
-  "Даже грустные мемы от тебя улыбаются!",
-  "Ты настолько классный, что хочется лайкнуть!",
-  "Твоя аура круче, чем новый айфон!"
-];
-
-const UNEXPECTED_PRAISES = [
-  "Квантовая физика тебе завидует!",
-  "Твоя душа написана каллиграфией вселенной!",
-  "Ты - секретный ингредиент счастья!",
-  "Даже время замедляется, чтобы полюбоваться тобой!",
-  "Ты говоришь на языке сердец!",
-  "Твоя аура перезаписывает код матрицы!",
-  "Ты - живое доказательство магии!",
-  "Звёзды шепчут твоё имя!",
-  "Ты алхимик хорошего настроения!",
-  "Твоя энергия переписывает законы физики!",
-  "Ты - секретное оружие против грусти!",
-  "Даже гравитация тянется к твоей крутости!"
-];
-
-// Объединяем все похвалы с пометками категорий
-const ALL_PRAISES = [
-  ...ORIGINAL_PRAISES,
-  ...FUNNY_PRAISES, 
-  ...UNEXPECTED_PRAISES
-];
+import { useLanguage } from './useLanguage';
 
 // Градиенты для каждого настроения
 const GRADIENTS = {
@@ -87,6 +19,7 @@ const GRADIENTS = {
 type MoodType = 'default' | 'sad' | 'happy';
 
 export const useMoodApp = () => {
+  const { t } = useLanguage();
   const [clickCount, setClickCount] = useState(0);
   const [currentMood, setCurrentMood] = useState<MoodType>('default');
   const [currentGradient, setCurrentGradient] = useState(GRADIENTS.default[0]);
@@ -102,16 +35,16 @@ export const useMoodApp = () => {
 
   const getRandomUnusedPraise = useCallback(() => {
     // Получаем неиспользованные похвалы
-    const availablePraises = ALL_PRAISES.filter(praise => !usedPraises.has(praise));
+    const availablePraises = t.praises.filter(praise => !usedPraises.has(praise));
     
     // Если все использованы, сбрасываем
     if (availablePraises.length === 0) {
       setUsedPraises(new Set());
-      return ALL_PRAISES[Math.floor(Math.random() * ALL_PRAISES.length)];
+      return t.praises[Math.floor(Math.random() * t.praises.length)];
     }
     
     return availablePraises[Math.floor(Math.random() * availablePraises.length)];
-  }, [usedPraises]);
+  }, [usedPraises, t.praises]);
 
   const handleMoodClick = useCallback((mood: 'sad' | 'happy') => {
     const newClickCount = clickCount + 1;
@@ -124,7 +57,7 @@ export const useMoodApp = () => {
     // Генерируем похвалу
     let praise: string;
     if (newClickCount >= 30) {
-      praise = "Теперь ты меня хвали!";
+      praise = t.finalMessage;
     } else {
       praise = getRandomUnusedPraise();
       setUsedPraises(prev => new Set(prev).add(praise));
@@ -174,6 +107,7 @@ export const useMoodApp = () => {
     handleMoodClick,
     onPraiseAnimationComplete,
     resetApp,
-    isComplete: clickCount >= 30
+    isComplete: clickCount >= 30,
+    t
   };
 };

@@ -4,9 +4,10 @@ interface MoodButtonProps {
   mood: 'sad' | 'happy';
   onClick: () => void;
   disabled?: boolean;
+  text: string;
 }
 
-const MoodButton = ({ mood, onClick, disabled = false }: MoodButtonProps) => {
+const MoodButton = ({ mood, onClick, disabled = false, text }: MoodButtonProps) => {
   const isSad = mood === 'sad';
   
   return (
@@ -23,7 +24,7 @@ const MoodButton = ({ mood, onClick, disabled = false }: MoodButtonProps) => {
           : "bg-button-happy text-button-happy-foreground hover:brightness-110"
       )}
     >
-      {isSad ? "Грустно" : "Весело"}
+      {text}
     </button>
   );
 };
