@@ -18,7 +18,7 @@ const Index = () => {
     onPraiseAnimationComplete,
     resetApp,
     isComplete
-  } = useMoodApp();
+  } = useMoodApp(t, language);
 
   // Update background gradient based on current gradient
   useEffect(() => {

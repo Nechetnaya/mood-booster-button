@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { useLanguage } from './useLanguage';
+import { Language, Translations } from './useLanguage';
 
 // Градиенты для каждого настроения
 const GRADIENTS = {
@@ -18,8 +18,7 @@ const GRADIENTS = {
 
 type MoodType = 'default' | 'sad' | 'happy';
 
-export const useMoodApp = () => {
-  const { t, language } = useLanguage();
+export const useMoodApp = (t: Translations, language: Language) => {
   const [clickCount, setClickCount] = useState(0);
   const [currentMood, setCurrentMood] = useState<MoodType>('default');
   const [currentGradient, setCurrentGradient] = useState(GRADIENTS.default[0]);
@@ -116,7 +115,6 @@ export const useMoodApp = () => {
     handleMoodClick,
     onPraiseAnimationComplete,
     resetApp,
-    isComplete: clickCount >= 30,
-    t
+    isComplete: clickCount >= 30
   };
 };
