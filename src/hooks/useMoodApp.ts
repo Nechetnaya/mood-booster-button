@@ -34,13 +34,14 @@ export const useMoodApp = () => {
   }, []);
 
   const getRandomUnusedPraise = useCallback(() => {
-    // Получаем неиспользованные похвалы
-    const availablePraises = t.praises.filter(praise => !usedPraises.has(praise));
+    // Получаем неиспользованные похвалы для текущего языка
+    const currentPraises = t.praises;
+    const availablePraises = currentPraises.filter(praise => !usedPraises.has(praise));
     
-    // Если все использованы, сбрасываем
+    // Если все использованы, сбрасываем счетчик для нового языка
     if (availablePraises.length === 0) {
       setUsedPraises(new Set());
-      return t.praises[Math.floor(Math.random() * t.praises.length)];
+      return currentPraises[Math.floor(Math.random() * currentPraises.length)];
     }
     
     return availablePraises[Math.floor(Math.random() * availablePraises.length)];
