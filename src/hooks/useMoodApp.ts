@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useLanguage } from './useLanguage';
 
 // Градиенты для каждого настроения
@@ -28,12 +28,11 @@ export const useMoodApp = () => {
   const [showButtons, setShowButtons] = useState(true);
   const [usedPraises, setUsedPraises] = useState<Set<string>>(new Set());
 
+  
   // Сбрасываем использованные похвалы при смене языка
-  const [currentLanguage, setCurrentLanguage] = useState(language);
-  if (currentLanguage !== language) {
+  useEffect(() => {
     setUsedPraises(new Set());
-    setCurrentLanguage(language);
-  }
+  }, [language]);
 
   const getRandomGradient = useCallback((mood: MoodType) => {
     const gradients = GRADIENTS[mood];
