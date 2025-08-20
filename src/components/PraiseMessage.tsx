@@ -17,7 +17,7 @@ const PraiseMessage = ({ message, isVisible, onAnimationComplete, onSkip }: Prai
       const timer = setTimeout(() => {
         setShouldRender(false);
         onAnimationComplete();
-      }, 300);
+      }, 500); // Увеличил для плавности
       return () => clearTimeout(timer);
     }
   }, [isVisible, onAnimationComplete]);

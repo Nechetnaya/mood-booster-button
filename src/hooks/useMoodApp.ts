@@ -26,6 +26,7 @@ export const useMoodApp = (t: Translations, language: Language) => {
   const [showPraise, setShowPraise] = useState(false);
   const [showButtons, setShowButtons] = useState(true);
   const [usedPraises, setUsedPraises] = useState<Set<string>>(new Set());
+  const [autoHideTimer, setAutoHideTimer] = useState<NodeJS.Timeout | null>(null);
 
   
   // Сбрасываем использованные похвалы при смене языка
@@ -55,6 +56,12 @@ export const useMoodApp = (t: Translations, language: Language) => {
   }, [usedPraises, t.praises, language]);
 
   const handleMoodClick = useCallback((mood: 'sad' | 'happy') => {
+    // Очищаем предыдущий таймер, если он существует
+    if (autoHideTimer) {
+      clearTimeout(autoHideTimer);
+      setAutoHideTimer(null);
+    }
+
     const newClickCount = clickCount + 1;
     setClickCount(newClickCount);
     setCurrentMood(mood);
@@ -80,23 +87,31 @@ export const useMoodApp = (t: Translations, language: Language) => {
       return;
     }
 
-    // Скрываем похвалу через 2 секунды и показываем кнопки
-    setTimeout(() => {
+    // Автоматически скрываем похвалу через 2 секунды
+    const timer = setTimeout(() => {
       setShowPraise(false);
       setTimeout(() => {
         setShowButtons(true);
-      }, 300);
+      }, 500); // Увеличил время для плавности
+      setAutoHideTimer(null);
     }, 2000);
-  }, [clickCount, getRandomGradient, getRandomUnusedPraise, t.finalMessage]);
+    setAutoHideTimer(timer);
+  }, [clickCount, getRandomGradient, getRandomUnusedPraise, t.finalMessage, autoHideTimer]);
 
   const handleSkipPraise = useCallback(() => {
+    // Очищаем автоматический таймер
+    if (autoHideTimer) {
+      clearTimeout(autoHideTimer);
+      setAutoHideTimer(null);
+    }
+
     if (clickCount < 30) {
       setShowPraise(false);
       setTimeout(() => {
         setShowButtons(true);
-      }, 300);
+      }, 500); // Увеличил время для плавности
     }
-  }, [clickCount]);
+  }, [clickCount, autoHideTimer]);
 
   const onPraiseAnimationComplete = useCallback(() => {
     if (clickCount < 30) {
@@ -105,6 +120,12 @@ export const useMoodApp = (t: Translations, language: Language) => {
   }, [clickCount]);
 
   const resetApp = useCallback(() => {
+    // Очищаем таймер при сбросе
+    if (autoHideTimer) {
+      clearTimeout(autoHideTimer);
+      setAutoHideTimer(null);
+    }
+    
     setClickCount(0);
     setCurrentMood('default');
     setCurrentGradient(GRADIENTS.default[0]);
@@ -112,7 +133,7 @@ export const useMoodApp = (t: Translations, language: Language) => {
     setShowPraise(false);
     setShowButtons(true);
     setUsedPraises(new Set());
-  }, []);
+  }, [autoHideTimer]);
 
   return {
     clickCount,
