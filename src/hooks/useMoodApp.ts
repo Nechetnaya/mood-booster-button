@@ -31,6 +31,7 @@ export const useMoodApp = () => {
   
   // Сбрасываем использованные похвалы при смене языка
   useEffect(() => {
+    console.log('Language changed to:', language);
     setUsedPraises(new Set());
   }, [language]);
 
@@ -42,6 +43,7 @@ export const useMoodApp = () => {
   const getRandomUnusedPraise = useCallback(() => {
     // Получаем неиспользованные похвалы для текущего языка
     const currentPraises = t.praises;
+    console.log('Current language:', language, 'Praises:', currentPraises.slice(0, 3));
     const availablePraises = currentPraises.filter(praise => !usedPraises.has(praise));
     
     // Если все использованы, сбрасываем счетчик для нового языка
@@ -51,7 +53,7 @@ export const useMoodApp = () => {
     }
     
     return availablePraises[Math.floor(Math.random() * availablePraises.length)];
-  }, [usedPraises, t.praises]);
+  }, [usedPraises, t.praises, language]);
 
   const handleMoodClick = useCallback((mood: 'sad' | 'happy') => {
     const newClickCount = clickCount + 1;
